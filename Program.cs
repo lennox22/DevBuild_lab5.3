@@ -74,6 +74,24 @@ namespace UsedCarLot
             inventory.Add(newAdd);
         }
 
+        public static void RemoveCarFromInventory(int newSub)
+        {
+            inventory.RemoveAt(newSub);
+        }
+
+        public static void DisplayMenu()
+        {
+            int i = 1;
+            Console.WriteLine($"\n   Make\t\tModel\t\tYear\tPrice\t\tMileage");
+            foreach (Car vehicle in inventory)
+            {
+                Console.Write($"{i}. {vehicle.ToString()}\n");
+                i++;
+            }
+
+            Console.Write($"{inventory.Count + 1}. Add a car\n{inventory.Count + 2}. Quit\n\n");
+        }
+
     }
     class Program
     {
@@ -152,7 +170,7 @@ namespace UsedCarLot
                 else
                 {
                     inValid = false;
-                    CarLot.inventory.RemoveAt(carChoice - 1);
+                    CarLot.RemoveCarFromInventory(carChoice - 1);
                     Console.Write("\nThank you for your purchase. Our finance department will be in contact.\n(We will hound you every minute of the rest of your life if you don't pick up)\n\n");
                 }
 
@@ -330,7 +348,7 @@ namespace UsedCarLot
 
             do
             {
-                DisplayMenu();
+                CarLot.DisplayMenu();
 
                 Console.Write($"What option do you select? ");
                 input = Console.ReadLine().ToLower();
@@ -357,18 +375,6 @@ namespace UsedCarLot
             return menuNumber;
         }
 
-        static void DisplayMenu()
-        {
-            int i = 1;
-            Console.WriteLine($"\n   Make\t\tModel\t\tYear\tPrice\t\tMileage");
-            foreach (Car vehicle in CarLot.inventory)
-            {
-                Console.Write($"{i}. {vehicle.ToString()}\n");
-                i++;
-            }
-
-            Console.Write($"{CarLot.inventory.Count + 1}. Add a car\n{CarLot.inventory.Count + 2}. Quit\n\n");
-        }
 
         static void InvalidMessage(int error)
         {
