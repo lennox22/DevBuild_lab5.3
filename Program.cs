@@ -38,7 +38,7 @@ namespace UsedCarLot
             set { price = value; }
         }
 
-        public virtual string ReturnListing() 
+        public override string ToString()
         {
             return ($"{amake} \t{amodel}\t\t{ayear}\t${aprice}");
         }
@@ -57,9 +57,9 @@ namespace UsedCarLot
             get { return mileage; }
             set { mileage = value; }
         }
-        public override string ReturnListing()
+        public override string ToString()
         {
-            return $"{base.ReturnListing()}\t{amileage} miles\t(USED)";
+            return $"{base.ToString()}\t{amileage} miles\t(USED)";
         }
 
     }
@@ -68,13 +68,12 @@ namespace UsedCarLot
     {
         public static List<Car> inventory = new List<Car>();
 
-        
+
         public static void AddCarToInventory(Car newAdd)
         {
             inventory.Add(newAdd);
         }
-        
-        
+
     }
     class Program
     {
@@ -89,12 +88,9 @@ namespace UsedCarLot
 
             do
             {
-
                 userChoice = ValidateInput();
 
                 loop = MenuChoice(userChoice);
-
-
 
             } while (loop);
 
@@ -115,7 +111,6 @@ namespace UsedCarLot
         static bool MenuChoice(int selection)
         {
             bool willLoop = true;
-
 
             if (selection > 0 && selection <= CarLot.inventory.Count)
             {
@@ -141,7 +136,7 @@ namespace UsedCarLot
 
             do
             {
-                Console.Write($"\n{CarLot.inventory[carChoice - 1].ReturnListing()}");
+                Console.Write($"\n{CarLot.inventory[carChoice - 1].ToString()}");
 
                 Console.Write("\nWould you like to buy this car? (y/n): ");
                 input = Console.ReadLine().ToLower();
@@ -163,7 +158,6 @@ namespace UsedCarLot
 
             } while (inValid);
 
-
         }
 
         static void AddCar()
@@ -174,7 +168,6 @@ namespace UsedCarLot
             int newYear;
             decimal newPrice;
             decimal newMileage;
-
 
             Console.Write($"\n\nGreat! ");
 
@@ -190,7 +183,6 @@ namespace UsedCarLot
 
             newPrice = EnterPrice();
 
-
             if (usedYN == "u")
             {
                 newMileage = EnterMiles();
@@ -200,7 +192,6 @@ namespace UsedCarLot
             {
                 CarLot.inventory.Add(new Car(newMake, newModel, newYear, newPrice));
             }
-
         }
 
         static decimal EnterMiles()
@@ -208,7 +199,6 @@ namespace UsedCarLot
             string input;
             bool inValid = true;
             decimal carMiles = 0;
-
 
             do
             {
@@ -291,7 +281,6 @@ namespace UsedCarLot
                     if (carYear > 1800 && carYear < DateTime.Now.Year + 3)
                     {
                         inValid = false;
-
                     }
                     else
                     {
@@ -303,9 +292,7 @@ namespace UsedCarLot
                     InvalidMessage(3);
                 }
 
-
             } while (inValid);
-
 
             return carYear;
         }
@@ -341,7 +328,6 @@ namespace UsedCarLot
             bool notValid = true;
             string input;
 
-
             do
             {
                 DisplayMenu();
@@ -371,19 +357,15 @@ namespace UsedCarLot
             return menuNumber;
         }
 
-
         static void DisplayMenu()
         {
-
             int i = 1;
             Console.WriteLine($"\n   Make\t\tModel\t\tYear\tPrice\t\tMileage");
             foreach (Car vehicle in CarLot.inventory)
             {
-
-                Console.Write($"{i}. {vehicle.ReturnListing()}\n");
+                Console.Write($"{i}. {vehicle.ToString()}\n");
                 i++;
             }
-
 
             Console.Write($"{CarLot.inventory.Count + 1}. Add a car\n{CarLot.inventory.Count + 2}. Quit\n\n");
         }
